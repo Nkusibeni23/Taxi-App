@@ -1,13 +1,35 @@
-import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import HomeScreen from "./screens/HomeScreen";
+import StandardScreen from "./screens/StandardScreen";
+import { Provider } from "react-redux";
+import { store } from "./store";
+import "react-native-gesture-handler";
 
-export default function App() {
+function App() {
+  const Stack = createNativeStackNavigator();
   return (
-    <View className=" flex-1 items-center justify-center bg-gray-800">
-      <Text className=" text-base font-bold text-white">
-        Open up App.js to start working on your app!
-      </Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+        <SafeAreaProvider>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="HomeScreen"
+              component={HomeScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="StandardScreen"
+              component={StandardScreen}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </SafeAreaProvider>
+      </NavigationContainer>
+    </Provider>
   );
 }
+
+export default App;
